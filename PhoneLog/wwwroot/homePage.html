@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Exercise #1</title>
+    <meta charset="utf-8" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <link href="css/homePage.css" rel="stylesheet" />
+    <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+    <div id="loginContainer">
+
+        <div class="imgcontainer">
+            <img src="resources/factoryBigLogo.png" alt="Avatar" class="avatar">
+        </div>
+
+        <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" id="usernameTF" placeholder="Enter Username" name="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" id="passwordTF" placeholder="Enter Password" name="psw" required>
+
+            <button id="loginButton">Login</button>
+
+
+        </div>
+    </div>
+
+
+    <div id="userList" style="display:none">
+
+        <div id="home">
+
+
+            <button id="CreateForm" data-toggle="myModal" data-target="myModal">Add Call Log</button>
+            <button id="AddUser" data-toggle="myModal" data-target="myModal">Add Call Log</button>
+
+
+            <div class="justify-content-center align-items-center row mt-5 ml-1">
+                <div class="col-12 text-center p-3"><h2>Current Students</h2></div>
+                <div class="list-group col-10" id="logsList" style="height:25vh;">
+                </div>
+            </div>
+
+
+            <!--<div class="justify-content-center align-items-center row mt-5 ml-1">-->
+            <!--<div class="col-12 text-center p-3"><h2>Current Logs</h2></div>-->
+            <!--<div class="list-group col-10" id="logsList" style="height:45vh;">
+        </div>
+    </div>-->
+            <!--<div class="justify-content-center align-items-center row mt-5 ml-1">
+      style="overflow:hidden;overflow-y:scroll;height:90vh;">
+     <div class="list-group col-10" id="logsList"></div>
+
+    </div>-->
+
+
+
+
+
+
+            <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="myModalLabel">Call Log</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mx-4 my-4">
+                                <div class="card">
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4">Company:</div>
+                                            <div class="col-8">
+                                                <input type="text" placeholder="Enter company" id="TextBoxCompany"
+                                                       class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Rep:</div>
+                                            <div class="col-8">
+                                                <input type="text" placeholder="Enter rep" id="TextBoxRep"
+                                                       class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Call Length:</div>
+                                            <div class="col-8">
+                                                <input type="text" placeholder="Enter call length" id="TextBoxLength"
+                                                       class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Notes:</div>
+                                            <div class="col-8">
+                                                <input type="text" placeholder="Enter call description" id="TextBoxNote"
+                                                       class="form-control" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-4">FollowUp:</div>
+                                            <div class="col-8">
+                                                <input type="checkbox" id="NeedFollowUp" />
+                                                <label class="form-check-label" for="flexCheckChecked">Yes</label>
+
+                                                <input type="checkbox" id="NoNeedFollowUp" />
+                                                <label class="form-check-label" for="flexCheckChecked">No</label>
+                                            </div>
+                                        </div>
+
+                                        <br />
+
+                                        <div class="row">
+                                            <div class="col-4">Issue Solved:</div>
+                                            <div class="col-8">
+                                                <input type="checkbox" id="issueSolved" />
+                                                <label class="form-check-label" for="flexCheckChecked">Yes</label>
+
+                                                <input type="checkbox" id="issueNotSolved" />
+                                                <label class="form-check-label" for="flexCheckChecked">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <input type="button" class="btn btn-secondary" value="Submit" id="SubmitForm" />
+                                <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <script src="lib/js/jquery.min.js"></script>
+    <script src="lib/js/bootstrap.min.js"></script>
+    <script src="js/myScript.js"></script>
+</body>
+
+</html>

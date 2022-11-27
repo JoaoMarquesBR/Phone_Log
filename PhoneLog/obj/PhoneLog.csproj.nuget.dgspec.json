@@ -1,0 +1,247 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\PhoneLog.csproj": {}
+  },
+  "projects": {
+    "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj",
+        "packagesPath": "C:\\Users\\MrPro\\.nuget\\packages\\",
+        "outputPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\MrPro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\PhoneLog.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\PhoneLog.csproj",
+        "projectName": "PhoneLog",
+        "projectPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\PhoneLog.csproj",
+        "packagesPath": "C:\\Users\\MrPro\\.nuget\\packages\\",
+        "outputPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\MrPro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj"
+              },
+              "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\ViewModels\\ViewModels.csproj": {
+                "projectPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\ViewModels\\ViewModels.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\ViewModels\\ViewModels.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\ViewModels\\ViewModels.csproj",
+        "projectName": "ViewModels",
+        "projectPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\ViewModels\\ViewModels.csproj",
+        "packagesPath": "C:\\Users\\MrPro\\.nuget\\packages\\",
+        "outputPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\ViewModels\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\MrPro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\DAL\\DAL.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.1.0, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
