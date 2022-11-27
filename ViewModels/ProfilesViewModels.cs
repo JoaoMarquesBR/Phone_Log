@@ -24,6 +24,39 @@ public class ProfilesViewModels
         _dao = new AccountDAO();
     }
 
+    public async Task<int> checkUsernameUse()
+    {
+        int value = -1;
+        try
+        {
+            Account acc = await _dao.checkUsernameUse(accountName);
+
+
+            if (acc.accountID < 0)
+            {
+                return -2; //username is in use
+            }
+            else
+            {
+                value = acc.accountID;
+            }
+        }
+        catch (NullReferenceException nex)
+        {
+            Debug.WriteLine(nex.Message);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Problem in " + GetType().Name + " " +
+             MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+            throw;
+        }
+
+        return value;
+
+    }
+
+
     public async Task<int> checkAccount()
     {
         int value = -1 ;
@@ -31,9 +64,15 @@ public class ProfilesViewModels
         {
             Account acc = await _dao.accountDAO_CheckAccount(accountName, accountPassword);
 
-            if (acc != null)
+            
+            if(acc.accountID <0)
+            {
+                return -2; //username is in use
+            }
+            else
+            {
                 value = acc.accountID;
-
+            }
         }
         catch (NullReferenceException nex)
         {
@@ -51,6 +90,10 @@ public class ProfilesViewModels
     }
   
    
+
+
+
+
 
     public async Task<int> AddAccount()
     {

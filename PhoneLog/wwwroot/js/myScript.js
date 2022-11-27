@@ -12,7 +12,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         try {
             let testBody
             let response = await fetch(`api/login/${username},${password}`, {
-                method: "GET",
+                method: "POST",
                 headers: { "Content-Type": "application/json; charset=utf-8" },
                 body: JSON.stringify(testBody),
             });
@@ -51,6 +51,47 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         console.log("Teste date as " + today)
 
     });
+
+
+    $("#AddUser").click( () => {
+        $("#addModal").modal("toggle");
+    });
+
+    $("#addUsername").click(async (e) => {
+        console.log("adding")
+        var username = $("#TextBoxUsername").val();
+        var password = $("#TextBoxUserPassword").val();
+
+        //check if its valid
+        try {
+            let testBody
+            let response = await fetch(`api/login/${username},${password}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                body: JSON.stringify(testBody),
+            });
+
+
+            let myData = await response.json();
+            myData = JSON.stringify(myData);
+
+           
+
+
+
+
+
+
+
+        } catch (error) {
+            // catastrophic
+            console.log("error " + error)
+            console.log("DID NOT OCCUR ")
+        }
+
+
+    });
+
 
     $("#SubmitForm").click(async (e) => {
 

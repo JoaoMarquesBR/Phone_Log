@@ -16,18 +16,33 @@ namespace DatabaseDAL
             _repo = new TheFactory_Repository<Account>();
         }
 
-        
-        public async Task<Account> accountDAO_CheckAccount(string username,string password)
-        {
 
+       public async Task<Account> checkUsernameUse(string username)
+        {
             Account? selectedAcc;
             try
             {
 
                 TheFactory_Context _db = new();
+                selectedAcc = await _db.Accounts.FirstOrDefaultAsync(acc => acc.username == username);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return selectedAcc!;
+        }
 
 
+        public async Task<Account> accountDAO_CheckAccount(string username,string? password){
+            Account? selectedAcc;
+            try
+            {
 
+                TheFactory_Context _db = new();
                 selectedAcc = await _db.Accounts.FirstOrDefaultAsync(acc => acc.username == username && acc.password == password);
                   
             }

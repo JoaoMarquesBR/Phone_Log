@@ -39,8 +39,9 @@
         <div id="home">
 
 
+            <button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>
+
             <button id="CreateForm" data-toggle="myModal" data-target="myModal">Add Call Log</button>
-            <button id="AddUser" data-toggle="myModal" data-target="myModal">Add Call Log</button>
 
 
             <div class="justify-content-center align-items-center row mt-5 ml-1">
@@ -143,6 +144,53 @@
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="myAddModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="myModalLabel">Add user</h2>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mx-4 my-4">
+                                <div class="card">
+
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4">Username:</div>
+                                            <div class="col-8">
+                                                <input type="text" placeholder="Enter company" id="TextBoxUsername"
+                                                       class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-4">Password:</div>
+                                            <div class="col-8">
+                                                <input type="text" placeholder="Enter company" id="TextBoxUserPassword"
+                                                       class="form-control" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <input type="button" class="btn btn-secondary" value="Add" id="addUsername" />
+                                <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
         </div>
 
     </div>
