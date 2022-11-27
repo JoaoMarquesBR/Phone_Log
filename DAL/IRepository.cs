@@ -13,6 +13,7 @@ namespace DatabaseDAL
 
         Task<List<T>> GetAll();
         Task<T> Add(T entity);
+        Task<int> Delete(int i);
 
     }
 }

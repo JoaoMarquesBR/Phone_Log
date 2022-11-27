@@ -40,7 +40,23 @@ namespace TheFactory_PhoneForm.Controllers
 
         }
 
-
+        [HttpDelete("{accountID}")]
+        public async Task<IActionResult> Delete(int accountID)
+        {
+            try
+            {
+                ProfilesViewModels viewmodel = new() { accountID = accountID };
+                return await viewmodel.Delete() == 1
+                ? Ok(new { msg = "Account " + viewmodel.accountName + " deleted!" })
+               : Ok(new { msg = "Account " + viewmodel.accountID + " not deleted!" });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+            }
+        }
 
 
 
@@ -99,6 +115,23 @@ namespace TheFactory_PhoneForm.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
             }
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                ProfilesViewModels viewmodel = new();
+                List<ProfilesViewModels> allStudents = await viewmodel.GetAll();
+                return Ok(allStudents);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+            }
         }
 
 

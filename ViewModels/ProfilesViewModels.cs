@@ -56,7 +56,6 @@ public class ProfilesViewModels
 
     }
 
-
     public async Task<int> checkAccount()
     {
         int value = -1 ;
@@ -88,12 +87,6 @@ public class ProfilesViewModels
         return value;
 
     }
-  
-   
-
-
-
-
 
     public async Task<int> AddAccount()
     {
@@ -114,6 +107,50 @@ public class ProfilesViewModels
             throw;
         }
 
+    }
+
+    public async Task<int> Delete()
+    {
+        try
+        {
+            // dao will return # of rows deleted
+            return await _dao.Delete((int)accountID!);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Problem in " + GetType().Name + " " +
+            MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+            throw;
+        }
+    }
+
+
+    public async Task<List<ProfilesViewModels>> GetAll()
+    {
+        List<ProfilesViewModels> allVms = new();
+        try
+        {
+            List<Account> allProfiles = await _dao.GetAll();
+           
+            foreach (Account stu in allProfiles)
+            {
+                ProfilesViewModels stuVm = new()
+                {
+                    accountID = stu.accountID,
+                    accountName = stu.username,
+                    accountPassword = stu.password
+                };
+               
+                allVms.Add(stuVm);
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Problem in " + GetType().Name + " " +
+            MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+            throw;
+        }
+        return allVms;
     }
 
 

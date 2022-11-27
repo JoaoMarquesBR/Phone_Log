@@ -74,7 +74,40 @@ namespace DatabaseDAL
             return acc.accountID;
         }
 
+        public async Task<int> Delete(int id)
+        {
+            int accountDeleted = -1;
+            try
+            {
+                accountDeleted = await _repo.Delete(id!);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return accountDeleted;
+        }
 
+
+        public async Task<List<Account>> GetAll()
+        {
+            List<Account> allStudents;
+            try
+            {
+                //SomeSchoolContext _db = new();
+                //allStudents = await _db.Students.ToListAsync();
+                allStudents = await _repo.GetAll();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return allStudents;
+        }
 
     }
 }

@@ -9,6 +9,7 @@ namespace DatabaseDAL
 {
     public class TheFactory_Entity
     {
-  
+        public int accountID { get; set; }
+
     }
 }

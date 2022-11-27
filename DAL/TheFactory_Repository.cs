@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,7 +35,6 @@ namespace DatabaseDAL
             }catch(Exception e)
             {
                 Debug.WriteLine("ERROR ERROR " + e.Message);
-                Debug.WriteLine("ERROR ERROR " + e.GetType);
 
             }
             Debug.WriteLine("\n\nEntity was SAVED OK ");
@@ -42,5 +42,16 @@ namespace DatabaseDAL
 
         }
 
+        public async Task<T?> GetOne(Expression<Func<T, bool>> match)
+        {
+            return await _db.Set<T>().FirstOrDefaultAsync(match);
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            T? currentEntity = await GetOne(ent => ent.accountID == id);
+            _db.Set<T>().Remove(currentEntity!);
+            return _db.SaveChanges();
+        }
     }
 }
