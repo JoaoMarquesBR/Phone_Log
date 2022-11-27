@@ -32,7 +32,7 @@ public class ProfilesViewModels
             Account acc = await _dao.checkUsernameUse(accountName);
 
 
-            if (acc.accountID < 0)
+            if ( acc == null)
             {
                 return -2; //username is in use
             }

@@ -7,16 +7,19 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     $("#loginButton").click(async (e) => {
         var username = $("#usernameTF").val();
         var password = $("#passwordTF").val();
-
+        console.log("clicked")
         //check if its valid
         try {
-            let testBody
+            let testBody;
+            console.log("Attempt login")
+            
             let response = await fetch(`api/login/${username},${password}`, {
-                method: "POST",
+                method: "GET",
                 headers: { "Content-Type": "application/json; charset=utf-8" },
                 body: JSON.stringify(testBody),
             });
 
+            console.log(testBody)
 
             let myData = await response.json();
             myData = JSON.stringify(myData);
@@ -64,24 +67,37 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
         //check if its valid
         try {
-            let testBody
-            let response = await fetch(`api/login/${username},${password}`, {
-                method: "POST",
+
+            //check if username is in use 
+            let responseID
+            let response = await fetch(`api/login/checkUsername/${username}`, {
+                method: "GET",
                 headers: { "Content-Type": "application/json; charset=utf-8" },
-                body: JSON.stringify(testBody),
+                body: JSON.stringify(responseID),
             });
 
-
-            let myData = await response.json();
-            myData = JSON.stringify(myData);
-
-           
+            responseID = await response.json();
+            responseID = JSON.stringify(responseID);
+            console.log("responseID is " + responseID)
 
 
 
+            if (responseID >= 0 ) {
+                //username is already in use
+                //status username in use.
+            } else {
+                //username can be used ;) 
+                let testBody
+                let response = await fetch(`api/login/${username},${password}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    body: JSON.stringify(testBody),
+                });
 
 
-
+                let myData = await response.json();
+                myData = JSON.stringify(myData);
+            }
 
         } catch (error) {
             // catastrophic
