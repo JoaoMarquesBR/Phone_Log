@@ -7,12 +7,9 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     $("#loginButton").click(async (e) => {
         var username = $("#usernameTF").val();
         var password = $("#passwordTF").val();
-        console.log("clicked")
         //check if its valid
         try {
-            let testBody;
-            console.log("Attempt login")
-            
+            let testBody;            
             let response = await fetch(`api/login/${username},${password}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -42,69 +39,80 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     });
 
 
-    $("#CreateForm").click(() => {
-        console.log("creating log?")
-      
-        $("#myModal").modal("toggle");
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
-        console.log("Teste date as " + today)
-
-    });
+   
 
 
-    $("#AddUser").click( () => {
-        $("#addModal").modal("toggle");
+    $("#buttonDiv").click((e) => {
+        let buttonClicked = e.target.id
+        console.log(buttonClicked)
+        if (buttonClicked==="AddUser") {
+            $("#addModal").modal("toggle");
+        } else if (buttonClicked === "CreateForm") {
+            $("#myModal").modal("toggle");
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            today = mm + '/' + dd + '/' + yyyy;
+        }
+
     });
 
     $("#addUsername").click(async (e) => {
-        console.log("adding")
         var username = $("#TextBoxUsername").val();
         var password = $("#TextBoxUserPassword").val();
 
         //check if its valid
         try {
 
-            //check if username is in use 
-            let responseID
-            let response = await fetch(`api/login/checkUsername/${username}`, {
-                method: "GET",
-                headers: { "Content-Type": "application/json; charset=utf-8" },
-                body: JSON.stringify(responseID),
-            });
-
-            responseID = await response.json();
-            responseID = JSON.stringify(responseID);
-            console.log("responseID is " + responseID)
-
-
-
-            if (responseID >= 0 ) {
-                //username is already in use
-                //status username in use.
+            //check if username is in use
+            if (username.length < 4) {
+                $("#addUserStatus").text("username needs more then 4 characters");
             } else {
-                //username can be used ;) 
-                let testBody
-                let response = await fetch(`api/login/${username},${password}`, {
-                    method: "POST",
+                let responseID
+                let response = await fetch(`api/login/checkUsername/${username}`, {
+                    method: "GET",
                     headers: { "Content-Type": "application/json; charset=utf-8" },
-                    body: JSON.stringify(testBody),
+                    body: JSON.stringify(responseID),
                 });
 
+                responseID = await response.json();
+                responseID = JSON.stringify(responseID);
 
-                let myData = await response.json();
-                myData = JSON.stringify(myData);
-            }
 
-        } catch (error) {
-            // catastrophic
-            console.log("error " + error)
-            console.log("DID NOT OCCUR ")
-        }
 
+                if (responseID >= 0) {
+                    //username is already in use
+                    //status username in use.
+
+                    $("#addUserStatus").text("Username already in use");
+
+                } else if (password.length < 4) {
+                    $("#addUserStatus").text("password needs more then 4 characters");
+                } else {
+                    //username can be used ;) 
+                    let testBody
+                    let response = await fetch(`api/login/${username},${password}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json; charset=utf-8" },
+                        body: JSON.stringify(testBody),
+                    });
+
+
+                    let myData = await response.json();
+                    myData = JSON.stringify(myData);
+                    $("#status").text("Account  " + username + " was inserted in the system")
+                    $("#addModal").modal("toggle");
+
+
+                }
+
+            } 
+        }catch (error) {
+                // catastrophic
+                console.log("error " + error)
+                console.log("DID NOT OCCUR ")
+         }
 
     });
 
@@ -192,7 +200,6 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
 
     const getAll = async (msg) => {
-        console.log("getAll()")
         try {
             //$("#studentList").text("Finding Student Information...");
             let accountID = sessionStorage.getItem("accountID")
@@ -219,21 +226,26 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     
 
     const buildStudentList = (data) => {
+
+
         $("#logsList").empty();
         console.log("start build")
 
         let accountID = (sessionStorage.getItem("accountID"))
-        //if (accountID == 1) {
-        //    adm = $(`<button id="AddAccount" >Add new User</button>`);
-        //    adm.appendTo($("#logsList"));   
-        //} 
-            //< button id = "CreateForm2" > Add User</button>
-//        div = $(`<div class="list-group-item text-white bg-secondary row d-flex" id="status">Student Info</div>
-// <div class= "list-group-item row d-flex text-center" id="heading">
-// <div class="col-4 h4">Title</div>
-//<div class="col-4 h4">First</div>
-//<div class="col-4 h4">Last</div>
-// </div>`);
+
+        $("#buttonDiv").empty();
+
+        if (accountID == 1) {
+            buttonDiv = $(`<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>`)
+            buttonDiv.appendTo("#buttonDiv")
+        }
+            
+
+        buttonDiv = $(`
+        <button id="CreateForm" data-toggle="myModal" data-target="myModal">Add Call Log</button>
+        `)
+        buttonDiv.appendTo("#buttonDiv")
+
         div = $(`
 
 <div   class="list-group-item text-white bg-secondary row d-flex" id="status">Your Call Logs</div>
