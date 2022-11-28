@@ -1,4 +1,5 @@
 ﻿using DAL;
+using ExercisesDAL;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Reflection;
@@ -37,7 +38,7 @@ namespace DatabaseDAL
         }
 
 
-        public async Task<Account> accountDAO_CheckAccount(string username,string? password){
+        public async Task<Account> accountDAO_CheckAccount(string username,string password){
             Account? selectedAcc;
             try
             {
@@ -108,6 +109,37 @@ namespace DatabaseDAL
             }
             return allStudents;
         }
+
+        public async Task<UpdateStatus> Update(Account updatedStudent)
+        {
+            UpdateStatus status = UpdateStatus.Failed;
+            try
+            {
+                TheFactory_Context _db = new();
+                Account? currentStudent = await _db.Accounts.FirstOrDefaultAsync(stu => stu.accountID == updatedStudent.accountID);
+                _db.Entry(currentStudent!).CurrentValues.SetValues(updatedStudent);
+                if (await _db.SaveChangesAsync() == 1)
+                {
+                    status = UpdateStatus.Ok;
+                };
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                status = UpdateStatus.Stale;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+
+            return status;
+        }
+
+
+
+
 
     }
 }

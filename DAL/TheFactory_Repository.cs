@@ -1,10 +1,13 @@
 ﻿using DAL;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Update;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +55,29 @@ namespace DatabaseDAL
             T? currentEntity = await GetOne(ent => ent.accountID == id);
             _db.Set<T>().Remove(currentEntity!);
             return _db.SaveChanges();
+        }
+
+
+        public async Task<int> Update(T updatedEntity)
+        {
+            int operationStatus = -5;
+            try
+            {
+                T? currentEntity = await GetOne(ent => ent.accountID == updatedEntity.accountID);
+                _db.Entry(currentEntity!).CurrentValues.SetValues(updatedEntity);
+                if (await _db.SaveChangesAsync() == 1) // should throw exception if stale;
+                    operationStatus = 1;
+            }
+            catch (DbUpdateConcurrencyException dbx)
+            {
+                operationStatus = 0;
+                Console.WriteLine("Problem in " + MethodBase.GetCurrentMethod()!.Name + dbx.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Problem in " + MethodBase.GetCurrentMethod()!.Name + ex.Message);
+            }
+            return operationStatus;
         }
     }
 }

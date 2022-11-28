@@ -1,4 +1,5 @@
 ﻿
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using System.Diagnostics;
@@ -19,15 +20,15 @@ namespace TheFactory_PhoneForm.Controllers
             try
             {
                 ProfilesViewModels viewmodel = new() { accountName = username};
-                int retVal = await viewmodel.checkUsernameUse();
+                Account acc = await viewmodel.checkUsernameUse();
 
-                if (retVal >= 0)
+                if (acc.accountID >= 0)
                 {
-                    return Ok(retVal);
+                    return Ok(acc);
                 }
                 else
                 {
-                    return Ok(-1); // something went wrong
+                    return Ok(-1); 
                 }
 
             }
@@ -57,11 +58,6 @@ namespace TheFactory_PhoneForm.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
             }
         }
-
-
-
-
-
 
         [HttpGet("{username},{password}")]
         public async Task<ActionResult> checkAccount(string username, string password)
@@ -134,6 +130,39 @@ namespace TheFactory_PhoneForm.Controllers
             }
         }
 
+
+        [HttpPut("{username},{password}")]
+        public async Task<ActionResult> updatePasword(string username,string password)
+        {
+            try
+            {
+                ProfilesViewModels viewmodel = new() { accountName = username };
+                Account acc = await viewmodel.checkUsernameUse();
+
+                if (acc!=null)
+                {
+
+                    viewmodel.accountName = acc.username;
+                    viewmodel.accountPassword = acc.password;
+                    viewmodel.accountID = acc.accountID;
+
+
+                int result  = await viewmodel.Update();
+
+                return Ok(result);
+
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return Ok(-1);
+        }
 
 
     }

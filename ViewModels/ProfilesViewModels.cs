@@ -24,22 +24,12 @@ public class ProfilesViewModels
         _dao = new AccountDAO();
     }
 
-    public async Task<int> checkUsernameUse()
+    public async Task<Account> checkUsernameUse()
     {
-        int value = -1;
         try
         {
             Account acc = await _dao.checkUsernameUse(accountName);
-
-
-            if ( acc == null)
-            {
-                return -2; //username is in use
-            }
-            else
-            {
-                value = acc.accountID;
-            }
+            return acc;
         }
         catch (NullReferenceException nex)
         {
@@ -51,9 +41,8 @@ public class ProfilesViewModels
              MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
             throw;
         }
-
-        return value;
-
+       
+        return null;
     }
 
     public async Task<int> checkAccount()
@@ -151,6 +140,31 @@ public class ProfilesViewModels
             throw;
         }
         return allVms;
+    }
+
+    public async Task<int> Update()
+    {
+        int updatestatus;
+        try
+        {
+            Account acc = new Account();
+            acc.accountID = accountID;
+            acc.username = accountName;
+            acc.password = accountPassword;
+
+          
+            updatestatus = (int)await _dao.Update(acc);
+
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine("Problem in " + GetType().Name + " " +
+            MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+            throw;
+        }
+
+
+        return updatestatus;
     }
 
 

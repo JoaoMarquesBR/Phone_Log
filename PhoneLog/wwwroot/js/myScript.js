@@ -77,7 +77,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 });
 
                 responseID = await response.json();
-                responseID = JSON.stringify(responseID);
+                responseID = JSON.stringify(responseID.accountID);
 
 
 
