@@ -45,13 +45,12 @@ public class ProfilesViewModels
         return null;
     }
 
-    public async Task<int> checkAccount()
+    public async Task<int> checkLogin()
     {
         int value = -1 ;
         try
         {
-            Account acc = await _dao.accountDAO_CheckAccount(accountName, accountPassword);
-
+            Account acc = await _dao.checkLogin(accountName, accountPassword);
             
             if(acc.accountID <0)
             {
@@ -112,7 +111,6 @@ public class ProfilesViewModels
             throw;
         }
     }
-
 
     public async Task<List<ProfilesViewModels>> GetAll()
     {

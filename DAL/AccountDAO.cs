@@ -38,7 +38,7 @@ namespace DatabaseDAL
         }
 
 
-        public async Task<Account> accountDAO_CheckAccount(string username,string password){
+        public async Task<Account> checkLogin(string username,string password){
             Account? selectedAcc;
             try
             {

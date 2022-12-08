@@ -66,6 +66,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         try {
 
             //check if username is in use
+            console.log("check username use ffirst")
             if (username.length < 4) {
                 $("#addUserStatus").text("username needs more then 4 characters");
             } else {
@@ -75,22 +76,20 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                     headers: { "Content-Type": "application/json; charset=utf-8" },
                     body: JSON.stringify(responseID),
                 });
-
                 responseID = await response.json();
-                responseID = JSON.stringify(responseID.accountID);
+                responseID = JSON.stringify(responseID);
+                console.log("got " + responseID)
 
-
-
-                if (responseID >= 0) {
+                if (responseID <0) {
                     //username is already in use
                     //status username in use.
-
                     $("#addUserStatus").text("Username already in use");
 
                 } else if (password.length < 4) {
                     $("#addUserStatus").text("password needs more then 4 characters");
                 } else {
                     //username can be used ;) 
+                    console.log("trying to POST")
                     let testBody
                     let response = await fetch(`api/login/${username},${password}`, {
                         method: "POST",

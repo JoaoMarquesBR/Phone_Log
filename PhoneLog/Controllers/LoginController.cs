@@ -22,7 +22,7 @@ namespace TheFactory_PhoneForm.Controllers
                 ProfilesViewModels viewmodel = new() { accountName = username};
                 Account acc = await viewmodel.checkUsernameUse();
 
-                if (acc.accountID >= 0)
+                if (acc == null)
                 {
                     return Ok(acc);
                 }
@@ -59,13 +59,15 @@ namespace TheFactory_PhoneForm.Controllers
             }
         }
 
+
+        //check username and password of user attemping to log in 
         [HttpGet("{username},{password}")]
-        public async Task<ActionResult> checkAccount(string username, string password)
+        public async Task<ActionResult> checkLogin(string username, string password)
         {
             try
             {
                 ProfilesViewModels viewmodel = new() { accountName = username, accountPassword = password };
-                int retVal = await viewmodel.checkAccount();
+                int retVal = await viewmodel.checkLogin();
 
                 if (retVal >= 0)
                 {
@@ -86,6 +88,8 @@ namespace TheFactory_PhoneForm.Controllers
 
         }
 
+
+        //addAccount
         [HttpPost("{username},{password}")]
         public async Task<ActionResult> addAcount(string username, string password)
         {
@@ -131,6 +135,7 @@ namespace TheFactory_PhoneForm.Controllers
         }
 
 
+        //update password
         [HttpPut("{username},{password}")]
         public async Task<ActionResult> updatePasword(string username,string password)
         {
@@ -143,7 +148,7 @@ namespace TheFactory_PhoneForm.Controllers
                 {
 
                     viewmodel.accountName = acc.username;
-                    viewmodel.accountPassword = acc.password;
+                    viewmodel.accountPassword = password;
                     viewmodel.accountID = acc.accountID;
 
 
