@@ -4,35 +4,36 @@
     <title>Student List</title>
     <meta charset="utf-8" />
     <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
+
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/homePage.css" rel="stylesheet" />
+
+
 </head>
+
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand mx-3" href="#">Info3070Exercises</a>
+        <a class="navbar-brand mx-3" href="#">LogForms</a>
         <button class="navbar-toggler mx-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/studentlookup.html">Original Lookup</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/modalexample.html">Modal</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/lab7a.html">Lab7a</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/lab9a.html">Lab9a</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="/studentlist.html">Students</a>
-                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link" href="/loglist.html">LogList</a>
+                </li>-->
+
             </ul>
+            <form>
+                <input class="form-control" type="search" placeholder="Search" id="srch" aria-label="Search"
+                       style="width:10vw;margin-right:5vw;">
+            </form>
+
+
         </div>
     </nav>
+
 
 
     <div id="loginContainer">
@@ -55,77 +56,193 @@
     </div>
 
 
-    <div class="justify-content-center align-items-center row mt-5 ml-1">
-        <div class="col-12 text-center p-3"><h2>Current Students</h2></div>
-        <div class="list-group col-10" id="logsList" style="height:45vh;">
+    <div id="userList" style="display:none">
+
+        <div id="buttonDiv">
+            <!--<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>-->
+            <!-- <button id="CreateForm" data-toggle="myModal" data-target="myModal">Add Call Log</button>-->
         </div>
-    </div>
+
+        <div class="justify-content-center align-items-center row mt-5 ml-1">
+            <div class="col-12 text-center p-3"><h2>Your log form</h2></div>
+            <div class="list-group col-10" id="logsList" style="height:45vh;">
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="myModalLabel">Call Log</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-4 my-4">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">Company:</div>
+                                        <div class="col-8">
+                                            <input type="text" placeholder="Enter company" id="TextBoxCompany"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Rep:</div>
+                                        <div class="col-8">
+                                            <input type="text" placeholder="Enter rep" id="TextBoxRep"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Call Length:</div>
+                                        <div class="col-8">
+                                            <input type="text" placeholder="Enter call length" id="TextBoxLength"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Notes:</div>
+                                        <div class="col-8">
+                                            <input type="text" placeholder="Enter call description" id="TextBoxNote"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
 
 
+                                    <div class="row">
+                                        <div class="col-4">FollowUp:</div>
+                                        <div class="col-8">
+                                            <input type="checkbox" id="NeedFollowUp" />
+                                            <label class="form-check-label" for="flexCheckChecked">Yes</label>
 
-    <div class="modal fade" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="myModalLabel">Student Update</h2>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mx-4 my-4">
-                        <div class="card">
-                            <div class="card-header text-center">
-                                Student Information
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4">Title:</div>
-                                    <div class="col-8">
-                                        <input type="text" placeholder="enter title" id="TextBoxTitle"
-                                               class="form-control" />
+                                            <input type="checkbox" id="NoNeedFollowUp" />
+                                            <label class="form-check-label" for="flexCheckChecked">No</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">First:</div>
-                                    <div class="col-8">
-                                        <input type="text" placeholder="enter first name" id="TextBoxFirstname"
-                                               class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">Surname:</div>
-                                    <div class="col-8">
-                                        <input type="text" placeholder="enter last name" id="TextBoxLastname"
-                                               class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">Phone#:</div>
-                                    <div class="col-8">
-                                        <input type="text" placeholder="enter last name" id="TextBoxPhone"
-                                               class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">Email:</div>
-                                    <div class="col-8">
-                                        <input type="text" placeholder="email address" id="TextBoxEmail"
-                                               class="form-control" />
+
+                                    <br />
+
+                                    <div class="row">
+                                        <div class="col-4">Issue Solved:</div>
+                                        <div class="col-8">
+                                            <input type="checkbox" id="issueSolved" />
+                                            <label class="form-check-label" for="flexCheckChecked">Yes</label>
+
+                                            <input type="checkbox" id="issueNotSolved" />
+                                            <label class="form-check-label" for="flexCheckChecked">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-footer text-center">
-                        <input type="button" class="btn btn-secondary" value="Update" id="updatebutton" />
-                        <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+                        <div class="card-footer text-center">
+                            <input type="button" class="btn btn-secondary" value="Submit" id="SubmitForm" />
+                            <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="myAddModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="myModalLabel">Add user</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-4 my-4">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">Username:</div>
+                                        <div class="col-8">
+                                            <input type="text" placeholder="Enter username" id="TextBoxUsername"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Password:</div>
+                                        <div class="col-8">
+                                            <input type="password" placeholder="Enter password" id="TextBoxUserPassword"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <div id="addUserStatus" class="text-left mt-3 mb-2"></div>
+                            <input type="button" class="btn btn-secondary" value="Add" id="addUsername" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="myUpdateModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="myModalLabel">Recover Account</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mx-4 my-4">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-4">Username:</div>
+                                        <div class="col-8">
+                                            <input type="text" placeholder="Enter username" id="TextBoxUsername"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">New Password:</div>
+                                        <div class="col-8">
+                                            <input type="password" placeholder="Enter password" id="TextBoxUserPassword"
+                                                   class="form-control" />
+                                        </div>
+                                        <div class="col-4">Confirm New Password:</div>
+                                        <div class="col-8">
+                                            <input type="password" placeholder="Enter password" id="TextBoxUserPassword"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer text-center">
+                            <div id="addUserStatus" class="text-left mt-3 mb-2"></div>
+                            <input type="button" class="btn btn-secondary" value="Add" id="recoverUser" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
+
     <script src="lib/js/jquery.min.js"></script>
     <script src="lib/js/bootstrap.min.js"></script>
+    <script src="lib/js/jquery.validate.min.js"></script>
     <script src="js/myScript.js"></script>
 </body>
 </html>

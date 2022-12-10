@@ -14,7 +14,7 @@ public partial class Form: TheFactory_Entity
 
     public string? repName { get; set; }
 
-    public DateTime? callDate { get; set; }
+    public DateTime callDate { get; set; }
 
     public string? timeLength { get; set; }
 

@@ -24,11 +24,11 @@ namespace TheFactory_PhoneForm.Controllers
 
                 if (acc == null)
                 {
-                    return Ok(acc);
+                    return Ok(1);//not used
                 }
                 else
                 {
-                    return Ok(-1); 
+                    return Ok(-1); //already used
                 }
 
             }

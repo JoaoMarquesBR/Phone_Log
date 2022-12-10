@@ -90,7 +90,7 @@ namespace ViewModels
                         accountID = (f.accountID),
                         companyName = f.companyName,
                         repName = f.repName,
-                        //callDate = f.callDate,
+                        callDate = f.callDate,
                         
                         callLength = f.timeLength,
                     callDesc = f.callDesc,

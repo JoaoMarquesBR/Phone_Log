@@ -5,6 +5,7 @@
 $(() => { // main jQuery routine - executes every on page load, $ is short for jquery
 
     $("#loginButton").click(async (e) => {
+        console.log("loggiiiin");
         var username = $("#usernameTF").val();
         var password = $("#passwordTF").val();
         //check if its valid
@@ -47,13 +48,17 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         console.log(buttonClicked)
         if (buttonClicked==="AddUser") {
             $("#addModal").modal("toggle");
-        } else if (buttonClicked === "CreateForm") {
+        } else if (buttonClicked === "UpdateAccount") {
+            $("#updateModal").modal("toggle");
+        }
+        else if (buttonClicked === "CreateForm") {
             $("#myModal").modal("toggle");
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
             var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
             var yyyy = today.getFullYear();
             today = mm + '/' + dd + '/' + yyyy;
+            
         }
 
     });
@@ -115,6 +120,23 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
     });
 
+    $("#recoverUser").click(async (e) => {
+        console.log("recovering")
+        var username = $("#TextBoxUsername").val();
+        var password = $("#TextBoxUserPassword").val();
+
+        //check if username exists
+
+
+        //confirms if both passwords matches
+
+        //if does not match, then we notify end user
+
+        //if matches, update password using fetch,display success message and toggle it off
+
+        
+        
+    });
 
     $("#SubmitForm").click(async (e) => {
 
@@ -224,18 +246,16 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
     
 
-    const buildStudentList = (data) => {
-
-
+    const buildStudentList = (data, usealldata = true) => {
+        console.log("buinding")
         $("#logsList").empty();
-        console.log("start build")
-
         let accountID = (sessionStorage.getItem("accountID"))
 
         $("#buttonDiv").empty();
-
         if (accountID == 1) {
-            buttonDiv = $(`<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>`)
+            buttonDiv = $(`<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>
+                            <button id="UpdateAccount" data-toggle="myUpdateModal" data-target="myUpdateModal">Recover Account</button>`)
+            //buttonDiv = $(`<button id="UpdateAccount" data-toggle="updateModal" data-target="updateModal">Recover Account</button>`)
             buttonDiv.appendTo("#buttonDiv")
         }
             
@@ -248,7 +268,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         div = $(`
 
 <div   class="list-group-item text-white bg-secondary row d-flex" id="status">Your Call Logs</div>
-                <div class= "list-group-item row d-flex text-center" id="heading">
+              
+<div class= "list-group-item row d-flex text-center" id="heading">
                 <div class="col-2 h6">Company</div>
                 <div class="col-2 h6">Date</div>
                 <div class="col-2 h6">Call Length</div>
@@ -257,15 +278,19 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 `);
         div.appendTo($("#logsList"));
 
-        sessionStorage.setItem("allLogs", JSON.stringify(data));
+        console.log(usealldata)
+        usealldata ? sessionStorage.setItem("allLogs", JSON.stringify(data)) : console.log("null??");
+
+        //sessionStorage.setItem("allLogs", JSON.stringify(data));
         data.forEach(form => {
- 
             var formatDate = new Date((form.callDate)); 
+            console.log(formatDate)
+
+
             var dd = String(formatDate.getDate()).padStart(2, '0');
             var mm = String(formatDate.getMonth() + 1).padStart(2, '0'); //January is 0!
             var yyyy = formatDate.getFullYear();
             formatDate = mm + '/' + dd + '/' + yyyy;
-            console.log(formatDate)
 
             btn = $(`<button class="list-group-item row d-flex" id="${form.id}">`);
             btn.html(`<div class="col-2" id="logCompany${form.companyName}">${form.companyName}</div>
@@ -279,11 +304,26 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         }); // forEach
 
 
+
         //<div class="col-4 h4">Call Time</div>
 
         //<div class="col-5" id="logTime${form.timeOfCall}">${form.timeOfCall}</div>
 
     }; // buildStudefirstntList
+
+
+
+    $("#srch").keyup(() => {
+        console.log("key pressedd")
+        let alldata = JSON.parse(sessionStorage.getItem("allLogs"));
+        let filtereddata = alldata.filter((stu) => stu.companyName.match(new RegExp($("#srch").val(), 'i')));
+        buildStudentList(filtereddata, false);
+    }); // srch keyup
+
+
+
+
+
 }); // jQuery re
 
 
