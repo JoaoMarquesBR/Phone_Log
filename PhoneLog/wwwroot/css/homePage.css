@@ -19,6 +19,10 @@
     border-radius: 40%;
     width: 120px;
 }
+
+.container{
+    width:40%;
+}
 /*#AddUser{
     border-radius: 40%;
     width: 120px;

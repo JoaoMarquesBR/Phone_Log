@@ -51,15 +51,18 @@ public class ProfilesViewModels
         try
         {
             Account acc = await _dao.checkLogin(accountName, accountPassword);
+            if (acc != null)
+            {
+                if (acc.accountID < 0)
+                {
+                    return -2; //username is in use
+                }
+                else
+                {
+                    value = acc.accountID;
+                }
+            }
             
-            if(acc.accountID <0)
-            {
-                return -2; //username is in use
-            }
-            else
-            {
-                value = acc.accountID;
-            }
         }
         catch (NullReferenceException nex)
         {

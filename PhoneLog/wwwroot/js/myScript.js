@@ -28,8 +28,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
              $("#userList").show(); 
              getAll("");
           } else {
-              console.log("username or password is wrong!")
-          }
+             $("#LoginStatus").text("Credentials are not valid.")
+         }
         } catch (error) {
             // catastrophic
             console.log("error "+ error )
@@ -83,9 +83,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 });
                 responseID = await response.json();
                 responseID = JSON.stringify(responseID);
-                console.log("got " + responseID)
 
-                if (responseID <0) {
+                if (responseID >=0) {
                     //username is already in use
                     //status username in use.
                     $("#addUserStatus").text("Username already in use");
@@ -121,21 +120,76 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     });
 
     $("#recoverUser").click(async (e) => {
-        console.log("recovering")
-        var username = $("#TextBoxUsername").val();
-        var password = $("#TextBoxUserPassword").val();
+        var username = $("#Recover_TextBoxUsername").val();
+        var password = $("#Recover_TextBoxUserPassword").val();
+        var password_confirm = $("#Recover_TextBoxUserPassword_confirm").val();
 
-        //check if username exists
+        try {
+
+            //check if username exists
+            let responseID
+            let response = await fetch(`api/login/checkUsername/${username}`, {
+                method: "GET",
+                headers: { "Content-Type": "application/json; charset=utf-8" },
+                body: JSON.stringify(responseID),
+            });
+
+            responseID = await response.json();
+            responseID = JSON.stringify(responseID);
+
+            console.log("usernameID = " + responseID)
 
 
-        //confirms if both passwords matches
+            if (responseID < 0) {
+                //notify account doesnt exist 
+                $("#updateStatus").text("Username does not exist.")
+            } else {
+                //confirms if both passwords matches
 
-        //if does not match, then we notify end user
+             
+                if (password !== password_confirm) {
+                    console.log("Both passwords must match.")
+                    
+                } else if (password.length <= 3) {
+                    console.log("password is too short")
+                    $("#updateStatus").text("username needs more then 4 characters");
 
-        //if matches, update password using fetch,display success message and toggle it off
+                } else {
+                   //if matches, update password using fetch,display success message and toggle it off
+                    console.log("responseRecover...")
+                    
+                    let responseRecover = await fetch(`api/login/${username},${password}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json; charset=utf-8" },
+                        body: JSON.stringify(responseID),
+                    });
+                    console.log("id the PUT")
+                    responseID = await responseRecover.json();
+                    responseID = JSON.stringify(responseID);
+                    console.log("responseID = " + responseID)
+                    if (responseID >= 1) {
+                        $("#status").text("Account  " + username + " had password updated")
+                        $("#updateModal").modal("toggle");
 
-        
-        
+       
+
+                    } else {
+                        //probably the password is the same as previously
+
+
+                        console.log("response of " + responseID)
+                    }
+
+
+                }
+
+
+            }
+
+        } catch (error) {
+            console.log("error??")
+
+        }
     });
 
     $("#SubmitForm").click(async (e) => {
@@ -321,7 +375,39 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     }); // srch keyup
 
 
+    $("#userList").click((e) => {
+       // clearModalFields();
+        $("#logModal").modal("toggle");
 
+        if (!e) e = window.event;
+        let formID = e.target.parentNode.formID;
+        console.log("letformID = "+ formID)
+        if (formID === "userList" || formID === "") {
+            formID = e.target.formID;
+        } // clicked on row somewhere else
+        let data = JSON.parse(sessionStorage.getItem("allLogs"))
+        data.forEach(log => {
+            console.log("comparing " + log.formID +" and "+formID)
+            if (log.formID === parseInt(formID)) {
+                console.log("SAME")
+                $("#view_companyName").val(log.companyName);
+                $("#view_repName").val(log.repName);
+                //$("#view_empName").val(student.lastname);
+                $("#view_callDate").val(log.callDate);
+                $("#view_callLength").val(log.callLength);
+                $("#view_followUp").val(log.followUp);
+                $("#view_issueSolved").val(log.issueSolved);
+
+
+            } else {
+                console.log(".")
+            }
+
+            //console.log(log)
+        })
+
+
+    }); 
 
 
 }); // jQuery re
