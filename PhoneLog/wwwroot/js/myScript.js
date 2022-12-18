@@ -49,7 +49,9 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         if (buttonClicked==="AddUser") {
             $("#addModal").modal("toggle");
         } else if (buttonClicked === "UpdateAccount") {
+            clearUpdateModal();
             $("#updateModal").modal("toggle");
+
         }
         else if (buttonClicked === "CreateForm") {
             $("#myModal").modal("toggle");
@@ -120,6 +122,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     });
 
     $("#recoverUser").click(async (e) => {
+
+
         var username = $("#Recover_TextBoxUsername").val();
         var password = $("#Recover_TextBoxUserPassword").val();
         var password_confirm = $("#Recover_TextBoxUserPassword_confirm").val();
@@ -148,7 +152,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
              
                 if (password !== password_confirm) {
-                    console.log("Both passwords must match.")
+                    $("#updateStatus").text("Both passwords must match.");
+
                     
                 } else if (password.length <= 3) {
                     console.log("password is too short")
@@ -175,9 +180,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
                     } else {
                         //probably the password is the same as previously
+                        $("#updateStatus").text("username already has that password");
 
-
-                        console.log("response of " + responseID)
                     }
 
 
@@ -346,7 +350,7 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             var yyyy = formatDate.getFullYear();
             formatDate = mm + '/' + dd + '/' + yyyy;
 
-            btn = $(`<button class="list-group-item row d-flex" id="${form.id}">`);
+            btn = $(`<button class="list-group-item row d-flex" id="${form.formID}">`);
             btn.html(`<div class="col-2" id="logCompany${form.companyName}">${form.companyName}</div>
                         <div class="col-2" id="logDate${formatDate}">${formatDate}</div>
                         <div class="col-2" id="logLength${form.callLength}">${form.callLength}</div>
@@ -374,29 +378,57 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         buildStudentList(filtereddata, false);
     }); // srch keyup
 
-
-    $("#userList").click((e) => {
+    $("#userList").click(async (e) => {
        // clearModalFields();
-        $("#logModal").modal("toggle");
-
+        
         if (!e) e = window.event;
-        let formID = e.target.parentNode.formID;
-        console.log("letformID = "+ formID)
-        if (formID === "userList" || formID === "") {
-            formID = e.target.formID;
+        let formID = e.target.parentNode.id;
+
+        if (formID !== "status") {
+            //formID = e.target.id;
         } // clicked on row somewhere else
+
+        //$("#logModal").modal("toggle");
+
+        console.log("formID = " + formID);
         let data = JSON.parse(sessionStorage.getItem("allLogs"))
-        data.forEach(log => {
-            console.log("comparing " + log.formID +" and "+formID)
+        data.forEach(async (log) => {
+            //console.log("comparing " + log.formID +" and "+formID)
+            let username;
             if (log.formID === parseInt(formID)) {
                 console.log("SAME")
+                $("#logModal").modal("toggle");
+                //let response = await fetch(`api/form/${accountID}`);
+                let response = await fetch(`api/login/getUserByID/${log.accountID}`)
+                if (response.ok) {
+                    let payload = await response.json(); // th
+                    console.log("response is " + payload.username)
+                    username = payload.username
+                }
+
+
+                let date = log.callDate
+                date = date.substr(0,10)
+
+
+
+                $("#view_description").val(log.callDesc)
                 $("#view_companyName").val(log.companyName);
                 $("#view_repName").val(log.repName);
-                //$("#view_empName").val(student.lastname);
-                $("#view_callDate").val(log.callDate);
+                $("#view_empName").val(username);
+                $("#view_callDate").val(date);
                 $("#view_callLength").val(log.callLength);
                 $("#view_followUp").val(log.followUp);
                 $("#view_issueSolved").val(log.issueSolved);
+
+                $("#view_description").attr('readonly', true);
+                $("#view_companyName").attr('readonly', true);
+                $("#view_repName").attr('readonly', true);
+                $("#view_empName").attr('readonly', true);
+                $("#view_callDate").attr('readonly', true);
+                $("#view_callLength").attr('readonly', true);
+                $("#view_followUp").attr('readonly', true);
+                $("#view_issueSolved").attr('readonly', true);
 
 
             } else {
@@ -408,6 +440,15 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
 
     }); 
+
+    const clearUpdateModal = () => {
+
+      $("#Recover_TextBoxUsername").val("");
+      $("#Recover_TextBoxUserPassword").val("");
+      $("#Recover_TextBoxUserPassword_confirm").val("");
+      $("#addUserStatus").text("");
+
+    }
 
 
 }); // jQuery re

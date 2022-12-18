@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "3ZFrKjadjSe2Xf+Mrtf+4ffl0P6yqzMQtjjHvMuQbAM=",
+  "Hash": "mj7+yKt7Q6eVMZIZzDDA7g1NGZkG04mXbJgTogeTo4U=",
   "Source": "PhoneLog",
   "BasePath": "_content/PhoneLog",
   "Mode": "Default",
@@ -170,12 +170,12 @@
       "OriginalItemSpec": "wwwroot\\lib\\support.png"
     },
     {
-      "Identity": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\logList.html",
+      "Identity": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\logForm.html",
       "SourceId": "PhoneLog",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\",
       "BasePath": "_content/PhoneLog",
-      "RelativePath": "logList.html",
+      "RelativePath": "logForm.html",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -184,7 +184,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\logList.html"
+      "OriginalItemSpec": "wwwroot\\logForm.html"
     },
     {
       "Identity": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\resources\\factoryBigLogo.png",

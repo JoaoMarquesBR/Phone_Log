@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Student List</title>
+    <title>Phone Logs</title>
     <meta charset="utf-8" />
     <link href="lib/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -108,9 +108,15 @@
                                     <div class="row">
                                         <div class="col-4">Notes:</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="Enter call description" id="TextBoxNote"
-                                                   class="form-control" />
+                                            <textarea maxlength="200" type="text" style="height: 120px; width: 100%" placeholder="Enter call description" id="TextBoxNote"
+                                                   class="form-control"></textarea>
+
+                                          
+
+                                        
                                         </div>
+
+                                        
                                     </div>
 
 
@@ -256,62 +262,70 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-4">CompanyName :</div>
+                                        <div class="col-4">CompanyName</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="enter title" id="view_companyName"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">Representetive :</div>
+                                        <div class="col-4">Representetive</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="enter first name" id="view_repName"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">Employee:</div>
+                                        <div class="col-4">Employee</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="enter last name" id="view_empName"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">callDate:</div>
+                                        <div class="col-4">callDate</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="enter last name" id="view_callDate"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">callLength:</div>
+                                        <div class="col-4">callLength</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="email address" id="view_callLength"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">followUp:</div>
+                                        <div class="col-4">followUp</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="email address" id="view_followUp"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">Email:</div>
+                                        <div class="col-4">IssueSolved</div>
                                         <div class="col-8">
                                             <input type="text" placeholder="email address" id="view_issueSolved"
                                                    class="form-control" />
                                         </div>
                                     </div>
-                                 
+                                    <div class="row">
+                                        <div class="col-4">Description</div>
+                                        <div class="col-8">
+                                            <!--<input type="text" style="height: 90px;" placeholder="email address" id="view_description"
+                                                   class="form-control" />-->
+                                            <textarea style="height: 90px; width: 100%" placeholder="email address" id="view_description"></textarea>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer text-center">
+                        <!--<div class="card-footer text-center">
                             <input type="button" class="btn btn-secondary" value="Update" id="updatebutton" />
                             <div id="modalstatus" class="text-left mt-3 mb-2"></div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>

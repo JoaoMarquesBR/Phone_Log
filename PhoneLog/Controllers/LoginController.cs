@@ -169,6 +169,33 @@ namespace TheFactory_PhoneForm.Controllers
             return Ok(-1);
         }
 
+        [Route("[action]/{accountID}")]
+        [HttpGet]
+        public async Task<ActionResult> getUserByID(int accountID)
+        {
+            try
+            {
+                ProfilesViewModels viewmodel = new() { accountID = accountID };
+                Account acc = await viewmodel.getAccountById(accountID);
+
+                if (acc == null)
+                {
+                    return Ok(-1);//ID not found
+                }
+                else
+                {
+                    return Ok(acc); //id found and returns user_name
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+            }
+
+        }
 
     }
 }
