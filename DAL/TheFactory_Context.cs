@@ -19,18 +19,23 @@ public partial class TheFactory_Context : DbContext
 
     public virtual DbSet<Form> Forms { get; set; }
 
+    public virtual DbSet<Purchase> Purchases { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\ProjectModels;Database=TheFactory_PhoneForms;Trusted_Connection=True;");
-
+        => optionsBuilder.UseSqlServer("Server=(localdb)\\ProjectModels;Database=TheFactory_PhoneForms;Persist Security Info=True;Encrypt=true;TrustServerCertificate=yes;Trusted_Connection=True;");
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.accountID).HasName("PK__Account__F267253EABE83CAC");
+            entity.HasKey(e => e.accountID).HasName("PK__Account__F267253EF34C6C1D");
 
             entity.ToTable("Account");
 
+            entity.Property(e => e.accountName)
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.password)
                 .HasMaxLength(20)
                 .IsUnicode(false);
@@ -41,7 +46,7 @@ public partial class TheFactory_Context : DbContext
 
         modelBuilder.Entity<Form>(entity =>
         {
-            entity.HasKey(e => e.formID).HasName("PK__Form__51BCB7CBDCBCB03C");
+            entity.HasKey(e => e.formID).HasName("PK__Form__51BCB7CB458AA695");
 
             entity.ToTable("Form");
 
@@ -68,6 +73,25 @@ public partial class TheFactory_Context : DbContext
             entity.HasOne(d => d.account).WithMany(p => p.Forms)
                 .HasForeignKey(d => d.accountID)
                 .HasConstraintName("forms_ProfID_FK");
+        });
+
+        modelBuilder.Entity<Purchase>(entity =>
+        {
+            entity.HasKey(e => e.Purchase_ID).HasName("PK__Purchase__543E6DA316FCA1AB");
+
+            entity.ToTable("Purchase");
+
+            entity.Property(e => e.net).HasColumnType("money");
+            entity.Property(e => e.productPrice).HasColumnType("money");
+            entity.Property(e => e.purchaseDate).HasColumnType("date");
+            entity.Property(e => e.reference).HasMaxLength(20);
+            entity.Property(e => e.supplier).HasMaxLength(20);
+            entity.Property(e => e.tax).HasColumnType("money");
+            entity.Property(e => e.totalAfterTax).HasColumnType("money");
+
+            entity.HasOne(d => d.account).WithMany(p => p.Purchases)
+                .HasForeignKey(d => d.accountID)
+                .HasConstraintName("Purchase_Buyer_ID");
         });
 
         OnModelCreatingPartial(modelBuilder);

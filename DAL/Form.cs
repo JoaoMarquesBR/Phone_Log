@@ -1,10 +1,11 @@
 ﻿using DatabaseDAL;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 
 namespace DAL;
 
-public partial class Form: TheFactory_Entity
+public partial class Form : TheFactory_Entity
 {
     public short formID { get; set; }
 

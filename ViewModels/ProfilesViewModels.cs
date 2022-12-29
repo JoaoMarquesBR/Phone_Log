@@ -14,9 +14,13 @@ public class ProfilesViewModels
     readonly private AccountDAO _dao;
     public int accountID { get; set; }
 
+    public string? employeeName { get; set; }
+
     public string? accountName { get; set; }
 
     public string? accountPassword { get; set; }
+
+    public string? permissionGroup { get; set; }
 
 
     public ProfilesViewModels()
@@ -87,7 +91,9 @@ public class ProfilesViewModels
             Account newAccount = new()
             {
                 username = accountName,
-                password = accountPassword  
+                password = accountPassword  ,
+                accountName = employeeName, 
+                permissionGroup = permissionGroup
             };
             accountID = await _dao.addAccount(newAccount);
             return accountID;
@@ -128,7 +134,9 @@ public class ProfilesViewModels
                 {
                     accountID = stu.accountID,
                     accountName = stu.username,
-                    accountPassword = stu.password
+                    accountPassword = stu.password,
+                    employeeName = stu.accountName,
+                    permissionGroup = stu.permissionGroup
                 };
                
                 allVms.Add(stuVm);
@@ -152,6 +160,7 @@ public class ProfilesViewModels
             acc.accountID = accountID;
             acc.username = accountName;
             acc.password = accountPassword;
+            acc.permissionGroup = permissionGroup;
 
           
             updatestatus = (int)await _dao.Update(acc);
@@ -166,6 +175,23 @@ public class ProfilesViewModels
 
 
         return updatestatus;
+    }
+
+
+    public async Task<Account> getAccountById(int accountID)
+    {
+        Account acc = new Account();
+        acc = await _dao.getAccountByID(accountID);
+
+        if(acc == null)
+        {
+            return null;
+        }
+        else
+        {
+            return acc;
+        }
+
     }
 
 

@@ -138,8 +138,25 @@ namespace DatabaseDAL
         }
 
 
+        
+        public async Task<Account> getAccountByID(int accountID)
+        {
+            Account? selectedAcc;
+            try
+            {
 
+                TheFactory_Context _db = new();
+                selectedAcc = await _db.Accounts.FirstOrDefaultAsync(acc => acc.accountID == accountID);
 
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+            return selectedAcc!;
+        }
 
     }
 }

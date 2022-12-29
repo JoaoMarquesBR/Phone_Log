@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>True|2022-12-18T18:42:30.6814305Z;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="Program.cs">
+      <publishTime>11/13/2022 15:59:24</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
