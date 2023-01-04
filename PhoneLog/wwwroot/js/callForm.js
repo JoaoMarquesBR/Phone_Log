@@ -21,6 +21,16 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             let myData = await response.json();
             myData = JSON.stringify(myData);
 
+
+            let getPermission = await fetch(`api/login/getUserByID/${myData}`)
+            let permission = null
+            if (getPermission.ok) {
+                let payload = await getPermission.json(); // th
+                permission = payload.groupPermission
+                console.log("perm "+ permission)
+            }
+            sessionStorage.setItem("Permission", permission)
+
             $("#searchNav").show()
 
             
@@ -63,66 +73,65 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
     });
 
-    //$("#addUsername").click(async (e) => {
-    //    var username = $("#TextBoxUsername").val();
-    //    var name = $("#TextBoxName").val();
+    $("#addUsername").click(async (e) => {
+        var username = $("#TextBoxUsername").val();
+        var name = $("#TextBoxName").val();
 
-    //    var password = $("#TextBoxUserPassword").val();
+        var password = $("#TextBoxUserPassword").val();
 
-    //    var permissionGroup = $("accountAccess").val();
-
+        var permissionGroup = $("#accountAccess").val();
+        console.log("group of "+ permissionGroup)
         
-    //    //check if its valid
-    //    try {
+        //check if its valid
+        try {
 
-    //        //check if username is in use
-    //        //console.log("check username use ffirst")
-    //        if (username.length < 4) {
-    //            $("#addUserStatus").text("username needs more then 4 characters");
-    //        } else {
-    //            let responseID
-    //            let response = await fetch(`api/login/checkUsername/${username}`, {
-    //                method: "GET",
-    //                headers: { "Content-Type": "application/json; charset=utf-8" },
-    //                body: JSON.stringify(responseID),
-    //            });
-    //            responseID = await response.json();
-    //            responseID = JSON.stringify(responseID);
+            //check if username is in use
+            //console.log("check username use ffirst")
+            if (username.length < 4) {
+                $("#addUserStatus").text("username needs more then 4 characters");
+            } else {
+                let responseID
+                let response = await fetch(`api/login/checkUsername/${username}`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    body: JSON.stringify(responseID),
+                });
+                responseID = await response.json();
+                responseID = JSON.stringify(responseID);
 
-    //            if (responseID >=0) {
-    //                //username is already in use
-    //                //status username in use.
-    //                $("#addUserStatus").text("Username already in use");
+                if (responseID >=0) {
+                    //username is already in use
+                    //status username in use.
+                    $("#addUserStatus").text("Username already in use");
 
-    //            } else if (password.length < 4) {
-    //                $("#addUserStatus").text("password needs more then 4 characters");
-    //            } else {
-    //                //username can be used ;) 
-    //                //console.log("trying to POST")
-    //                let testBody
-    //                let response = await fetch(`api/login/${username},${password},${name},${permissionGroup}`, {
-    //                    method: "POST",
-    //                    headers: { "Content-Type": "application/json; charset=utf-8" },
-    //                    body: JSON.stringify(testBody),
-    //                });
-
-
-    //                let myData = await response.json();
-    //                myData = JSON.stringify(myData);
-    //                $("#status").text("Account  " + username + " was inserted in the system")
-    //                $("#addModal").modal("toggle");
+                } else if (password.length < 4) {
+                    $("#addUserStatus").text("password needs more then 4 characters");
+                } else {
+                    //username can be used ;) 
+                    let testBody
+                    let response = await fetch(`api/login/${username},${password},${name},${permissionGroup}`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json; charset=utf-8" },
+                        body: JSON.stringify(testBody),
+                    });
 
 
-    //            }
+                    let myData = await response.json();
+                    myData = JSON.stringify(myData);
+                    $("#status").text("Account  " + username + " was inserted in the system")
+                    $("#addModal").modal("toggle");
 
-    //        } 
-    //    }catch (error) {
-    //            // catastrophic
-    //            console.log("error " + error)
-    //            //console.log("DID NOT OCCUR ")
-    //     }
 
-    //});
+                }
+
+            } 
+        }catch (error) {
+                // catastrophic
+                console.log("error " + error)
+                //console.log("DID NOT OCCUR ")
+         }
+
+    });
 
     $("#recoverUser").click(async (e) => {
 
@@ -299,15 +308,14 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
     const buildStudentList = (data, usealldata = true) => {
         $("#logsList").empty();
-        let accountID = (sessionStorage.getItem("accountID"))
+        let permission = (sessionStorage.getItem("Permission"))
 
         $("#buttonDiv").empty();
-        if (accountID == 1) {
+
+        if (permission === "Administrator") {
             buttonDiv = $(`<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>
                             <button id="UpdateAccount" data-toggle="myUpdateModal" data-target="myUpdateModal">Recover Account</button>`)
             //buttonDiv = $(`<button id="UpdateAccount" data-toggle="updateModal" data-target="updateModal">Recover Account</button>`)
-
-
 
             buttonDiv.appendTo("#buttonDiv")
         }

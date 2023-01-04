@@ -127,8 +127,6 @@
                                     </div>
                                     <br />
 
-
-
                                     <div class="row">
                                         <div class="col-4">Reference:</div>
                                         <div class="col-8">
@@ -148,15 +146,30 @@
                                     </div>
 
                                     <br />
+                                    <div class="row">
+                                        <div class="col-10">Needs Approval:</div>
+                                        <div class="col-10">
+                                            <input type="checkbox" id="needApproval" />
+                                            <label class="form-check-label" for="flexCheckChecked">Yes</label>
+
+                                            <input type="checkbox" id="noApproval" />
+                                            <label class="form-check-label" for="flexCheckChecked">No</label>
+                                        </div>
+                                    </div>
+                                    <br />
+
+
 
 
                                 </div>
+                                <div class="card-footer text-center">
+                                    <input type="button" class="btn btn-secondary" value="Submit" id="SubmitForm" />
+                                    <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+                                </div>
+                                <br />
                             </div>
                         </div>
-                        <div class="card-footer text-center">
-                            <input type="button" class="btn btn-secondary" value="Submit" id="SubmitForm" />
-                            <div id="modalstatus" class="text-left mt-3 mb-2"></div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -199,6 +212,13 @@
                                                    class="form-control" />
                                         </div>
                                     </div>
+
+                                    <div class="col-4">Permission:</div>
+                                    <select class="col-8" name="access" id="accountAccess">
+                                        <option value="Default">Default</option>
+                                        <option value="Administrator">Administrator</option>
+                                    </select>
+
 
                                 </div>
                             </div>
@@ -248,6 +268,9 @@
                                         </div>
                                     </div>
 
+                                    <br />
+
+
                                 </div>
                             </div>
                         </div>
@@ -281,58 +304,97 @@
                                     <div class="row">
                                         <div class="col-4">supplier</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="enter title" id="view_supplier"
+                                            <input type="text" id="view_supplier"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">buyer</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="enter title" id="view_buyer"
+                                            <input type="text" id="view_buyer"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">reference</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="enter title" id="view_reference"
+                                            <input type="text" id="view_reference"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">quantity</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="enter first name" id="view_quantity"
+                                            <input type="text" id="view_quantity"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">productPrice</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="enter last name" id="view_productPrice"
+                                            <input type="text" id="view_productPrice"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">tax</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="enter last name" id="view_tax"
+                                            <input type="text" id="view_tax"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">net</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="email address" id="view_net"
+                                            <input type="text" id="view_net"
                                                    class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">total</div>
                                         <div class="col-8">
-                                            <input type="text" placeholder="email address" id="view_total"
+                                            <input type="text" id="view_total"
                                                    class="form-control" />
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Status</div>
+                                        <div class="col-8">
+                                            <input type="text" id="view_status"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4">Approved by</div>
+                                        <div class="col-8">
+                                            <input type="text" id="view_approvedBy"
+                                                   class="form-control" />
+                                        </div>
+                                    </div>
+                                    <br />
+
+                                    <div class="card-footer text-center">
+
+
+
+
+                                    </div>
+
+                                    <div id="updateStatusDiv">
+                                        <!--<div class="card-footer text-center">
+                                            <label for="formStatus">Pending order</label>
+
+
+                                            <select name="statusForForm" id="formStatusUpdate">
+                                                <option></option>
+
+                                                <option value="Approved">Approved</option>
+                                                <option value="Denied">Denied</option>
+                                            </select>
+                                            <input type="button" class="btn btn-secondary" value="Update Status" id="actionbutton" />
+                                            <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+
+                                        </div>-->
                                     </div>
 
 
@@ -355,7 +417,6 @@
     <script src="lib/js/bootstrap.min.js"></script>
     <script src="lib/js/jquery.validate.min.js"></script>
     <script src="js/purchaseForm.js"></script>
-    <script src="js/commonScript.js"></script>
 
 </body>
 </html>

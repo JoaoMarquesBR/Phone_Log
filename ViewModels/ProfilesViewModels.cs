@@ -20,7 +20,8 @@ public class ProfilesViewModels
 
     public string? accountPassword { get; set; }
 
-    public string? permissionGroup { get; set; }
+    public string? groupPermission { get; set; }
+
 
 
     public ProfilesViewModels()
@@ -93,7 +94,7 @@ public class ProfilesViewModels
                 username = accountName,
                 password = accountPassword  ,
                 accountName = employeeName, 
-                permissionGroup = permissionGroup
+                groupPermission = groupPermission
             };
             accountID = await _dao.addAccount(newAccount);
             return accountID;
@@ -136,7 +137,7 @@ public class ProfilesViewModels
                     accountName = stu.username,
                     accountPassword = stu.password,
                     employeeName = stu.accountName,
-                    permissionGroup = stu.permissionGroup
+                    groupPermission = stu.groupPermission
                 };
                
                 allVms.Add(stuVm);
@@ -160,7 +161,7 @@ public class ProfilesViewModels
             acc.accountID = accountID;
             acc.username = accountName;
             acc.password = accountPassword;
-            acc.permissionGroup = permissionGroup;
+            acc.groupPermission = groupPermission;
 
           
             updatestatus = (int)await _dao.Update(acc);

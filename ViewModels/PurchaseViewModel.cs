@@ -1,11 +1,13 @@
 ﻿using DAL;
 using DatabaseDAL;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,7 +38,9 @@ namespace ViewModels
 
         public string? reference { get; set; }
 
+        public string? status { get; set; }
 
+        public int? accountID_approver { get; set; }
 
         public PurchaseViewModel()
         {
@@ -60,7 +64,9 @@ namespace ViewModels
                     net = net,
                     totalAfterTax = totalAfterTax,
                     purchaseDate = purchaseDate,
-                    reference = reference
+                    reference = reference,
+                    status =status ,
+                    accountID_approver = accountID_approver
                 };
 
 
@@ -98,9 +104,9 @@ namespace ViewModels
                        net = f.net,
                        totalAfterTax = f.totalAfterTax,
                        purchaseDate=f.purchaseDate,
-                       reference = f.reference
-
-
+                       reference = f.reference,
+                       accountID_approver = f.accountID_approver,
+                       status = f.status
                     };
 
 
@@ -118,6 +124,65 @@ namespace ViewModels
                 Debug.WriteLine(e.Message);
             }
             return allVms;
+        }
+
+        public async Task<Purchase> getPurchaseByID(int purchaseID)
+        {
+            Purchase purchase = new Purchase();
+            purchase = await daoForm.getPurchase(purchaseID);
+
+            return purchase;
+            
+            //Purchase? selectedPurchase;
+            //try
+            //{
+
+            //    TheFactory_Context _db = new();
+            //    selectedPurchase = await _db.Purchases.FirstOrDefaultAsync(acc => acc.Purchase_ID == purchaseID);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Debug.WriteLine("Problem in " + GetType().Name + " " +
+            //    MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+            //    throw;
+            //}
+            //return selectedPurchase!;
+        }   
+
+        public async Task<int> UpdateStatus()
+        {
+            int updatestatus;
+            try
+            {
+                Purchase p = new Purchase();
+
+                p.Purchase_ID = Purchase_ID;
+                p.accountID = accountID;
+                p.purchaseDate = purchaseDate;
+                p.quantity = quantity;
+                p.productPrice = productPrice;  
+                p.tax = tax;
+                p.net = net;
+                p.totalAfterTax = totalAfterTax;
+                p.status = status;
+                p.accountID_approver = accountID_approver;
+                p.reference = reference;
+                p.status = status;
+                p.supplier = supplier;
+
+
+                updatestatus = (int)await daoForm.Update(p);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                throw;
+            }
+
+
+            return updatestatus;
         }
 
     }

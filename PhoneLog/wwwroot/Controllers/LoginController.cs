@@ -1,5 +1,4 @@
-﻿
-using DAL;
+﻿using DAL;
 using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -96,7 +95,7 @@ namespace TheFactory_PhoneForm.Controllers
         {
             try
             {
-                ProfilesViewModels viewmodel = new() { accountName = username, accountPassword = password,employeeName = name , permissionGroup = permissionGroup };
+                ProfilesViewModels viewmodel = new() { accountName = username, accountPassword = password,employeeName = name, groupPermission = permissionGroup  };
                 int retVal = await viewmodel.AddAccount();
 
                 if (retVal >= 0)

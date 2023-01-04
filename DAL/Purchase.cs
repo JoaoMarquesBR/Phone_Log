@@ -6,7 +6,7 @@ namespace DAL;
 
 public partial class Purchase : TheFactory_Entity
 {
-    public short Purchase_ID { get; set; }
+    public int Purchase_ID { get; set; }
 
     public int? accountID { get; set; }
 
@@ -25,6 +25,10 @@ public partial class Purchase : TheFactory_Entity
     public decimal? totalAfterTax { get; set; }
 
     public string? reference { get; set; }
+
+    public string? status { get; set; }
+
+    public int? accountID_approver { get; set; }
 
     public virtual Account? account { get; set; }
 }

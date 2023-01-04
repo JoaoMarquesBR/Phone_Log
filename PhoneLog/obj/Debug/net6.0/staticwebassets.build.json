@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "EvHsWh76CPAfKvdJrimBOmZ+ZC5xf2zQGT130D328lQ=",
+  "Hash": "wSxVpwa/myDvu+ho2HdfKXtYa5jO2I8leradsFTwxhM=",
   "Source": "PhoneLog",
   "BasePath": "_content/PhoneLog",
   "Mode": "Default",
@@ -117,23 +117,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\callForm.js"
-    },
-    {
-      "Identity": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\js\\commonScript.js",
-      "SourceId": "PhoneLog",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\",
-      "BasePath": "_content/PhoneLog",
-      "RelativePath": "js/commonScript.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\commonScript.js"
     },
     {
       "Identity": "C:\\$$Fanshawe\\$$Fanshawe Fall 2022\\Client Server App Dev\\TheFactory_PhoneLog\\PhoneLog\\wwwroot\\js\\purchaseForm.js",

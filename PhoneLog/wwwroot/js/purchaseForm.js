@@ -25,6 +25,15 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
          if (myData >=0) {
              sessionStorage.setItem("accountID", myData)
+
+             let getPermission = await fetch(`api/login/getUserByID/${myData}`)
+             let permission = null
+             if (getPermission.ok) {
+                 let payload = await getPermission.json(); // th
+                 permission = payload.groupPermission
+             }
+             sessionStorage.setItem("Permission", permission)
+
              $("#loginContainer").hide();
              $("#userList").show(); 
              getAll("");
@@ -43,12 +52,12 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     $("#buttonDiv").click((e) => {
         let buttonClicked = e.target.id
         console.log(buttonClicked)
+        console.log(buttonClicked)
         if (buttonClicked==="AddUser") {
             $("#addModal").modal("toggle");
         } else if (buttonClicked === "UpdateAccount") {
             clearUpdateModal();
             $("#updateModal").modal("toggle");
-
         }
         else if (buttonClicked === "CreateForm") {
             $("#myModal").modal("toggle");
@@ -66,12 +75,12 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         var username = $("#TextBoxUsername").val();
         var password = $("#TextBoxUserPassword").val();
         var name = $("#TextBoxName").val();
+        var permissionGroup = $("#accountAccess").val();
 
         //check if its valid
         try {
 
             //check if username is in use
-            console.log("check username use ffirst")
             if (username.length < 4) {
                 $("#addUserStatus").text("username needs more then 4 characters");
             } else {
@@ -93,10 +102,9 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                     $("#addUserStatus").text("password needs more then 4 characters");
                 } else {
                     //username can be used ;) 
-                    console.log("trying to POST")
-                    console.log("adding name as "+ name)
+              
                     let testBody
-                    let response = await fetch(`api/login/${username},${password},${name}`, {
+                    let response = await fetch(`api/login/${username},${password},${name},${permissionGroup}`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json; charset=utf-8" },
                         body: JSON.stringify(testBody),
@@ -115,7 +123,6 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         }catch (error) {
                 // catastrophic
                 console.log("error " + error)
-                console.log("DID NOT OCCUR ")
          }
 
     });
@@ -140,7 +147,6 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             responseID = await response.json();
             responseID = JSON.stringify(responseID);
 
-            console.log("usernameID = " + responseID)
 
 
             if (responseID < 0) {
@@ -155,22 +161,18 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
                     
                 } else if (password.length <= 3) {
-                    console.log("password is too short")
                     $("#updateStatus").text("username needs more then 4 characters");
 
                 } else {
                    //if matches, update password using fetch,display success message and toggle it off
-                    console.log("responseRecover...")
                     
                     let responseRecover = await fetch(`api/login/${username},${password}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json; charset=utf-8" },
                         body: JSON.stringify(responseID),
                     });
-                    console.log("id the PUT")
                     responseID = await responseRecover.json();
                     responseID = JSON.stringify(responseID);
-                    console.log("responseID = " + responseID)
                     if (responseID >= 1) {
                         $("#status").text("Account  " + username + " had password updated")
                         $("#updateModal").modal("toggle");
@@ -200,17 +202,32 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
         let accountID = sessionStorage.getItem("accountID");
 
+        let permission = (sessionStorage.getItem("Permission"))
+
+        $("#buttonDiv").empty();
+        if (permission === "Administrator") {
+            $("#updateStatusDiv").empty();
+                console.log("x1")
+              
+            buttonDiv = $(`<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>
+                            <button id="UpdateAccount" data-toggle="myUpdateModal" data-target="myUpdateModal">Recover Account</button>`)
+            //buttonDiv = $(`<button id="UpdateAccount" data-toggle="updateModal" data-target="updateModal">Recover Account</button>`)
+            buttonDiv.appendTo("#buttonDiv")
+        }
+
+
         myPurchase = new Object();
         myPurchase.accountID = accountID;
+        myPurchase.status = "pending";
+
+
 
         myPurchase.supplier = $("#TextBoxSupplier").val();
         myPurchase.quantity = $("#TextBoxQuantity").val();
         myPurchase.productPrice = $("#TextBoxPrice").val();
         myPurchase.reference = $("#TextBoxReference").val();
         myPurchase.net = myPurchase.productPrice * myPurchase.quantity;       
-   
-        let checkBoxNotMaked = true;
-
+  
      
         if (document.getElementById('includeTax').checked) {
             myPurchase.tax = 1.13
@@ -223,18 +240,9 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             checkBoxNotMaked = false;
         }
 
-    
-
-
         myPurchase.purchaseDate = new Date();
+        //console.log("adding "+ myPurchase)
 
-        //console.log("Sending " + JSON.stringify(myForm))
-
-
-        //if (checkBoxNotMaked==false) {
-        //    console.log("Needs to mark checkboxes")
-        //} else {
-        
           let response = await fetch("api/purchase", {
                     method: "post",
                     headers: {
@@ -242,13 +250,74 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                     },
               body: JSON.stringify(myPurchase)
           });
+        console.log(JSON.stringify(myPurchase))
            $("#myModal").modal("toggle");
             getAll("");
 
         //}
+
+        $("#TextBoxSupplier").val("")
+        $("#TextBoxQuantity").val("")
+        $("#TextBoxPrice").val("")
+        $("#TextBoxReference").val("")
+        $("#TextBoxTotalAfterTax").val("")
+
+            
+
+        $("#includeTax").prop("checked", false);
+        $("#noTax").prop("checked", false);
+        $("#noApproval").prop("checked", false);
+        $("#needApproval").prop("checked", false);
+
+
+
+
     });
 
 
+    //update purchaseForm
+    $("#updateStatusDiv").click(async (e) => {
+        let buttonClicked = e.target.id
+
+        if (buttonClicked === "actionbutton") {
+            let accountID = sessionStorage.getItem("accountID");
+          let purchaseID = sessionStorage.getItem("formID")
+          let status = $("#formStatusUpdate").val()
+
+          let responseID
+
+         let responseRecover = await fetch(`api/Purchase/${status},${purchaseID},${accountID}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            body: JSON.stringify(responseID),
+
+        
+        });
+
+    
+
+
+        $("#logModal").modal("toggle");
+        getAll("");
+
+
+        }
+
+       
+
+
+    })
+
+
+    $("#needApproval").click(() => {
+        $("#noApproval").prop("checked", false);
+        updateTotal()
+    });
+
+    $("#noApproval").click(() => {
+        $("#needApproval").prop("checked", false);
+        updateTotal()
+    })
 
     $("#includeTax").click(() => {
         $("#noTax").prop("checked", false);
@@ -265,7 +334,20 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
         try {
             //$("#studentList").text("Finding Student Information...");
             let accountID = sessionStorage.getItem("accountID")
-            let response = await fetch(`api/purchase/${accountID}`);
+            let permission = (sessionStorage.getItem("Permission"))
+
+
+            //in case of ADmin account, we switch the number to 1 ONLY for searchign up  
+            let account_ID_PURCHASES
+            if (permission === "Administrator") {
+                account_ID_PURCHASES = 1
+            } else {
+                account_ID_PURCHASES = accountID
+            }
+
+            let response = await fetch(`api/purchase/${account_ID_PURCHASES}`);
+
+            //if(permission=="")
             if (response.ok) {
                 let payload = await response.json(); // this returns a promise, so we await it
                 buildPurchasesForm(payload);
@@ -283,12 +365,34 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
     }; // getAll
 
     const buildPurchasesForm = (data, usealldata = true) => {
-
         $("#logsList").empty();
-        let accountID = (sessionStorage.getItem("accountID"))
+        let permission = (sessionStorage.getItem("Permission"))
 
         $("#buttonDiv").empty();
-        if (accountID == 1) {
+        if (permission === "Administrator") {
+
+            $("#updateStatusDiv").empty();
+
+            updateStatusDiv = $(` <div class="card-footer text-center">
+                                            <label for="formStatus">Pending order</label>
+
+
+                                            <select name="statusForForm" id="formStatusUpdate">
+                                                <option></option>
+
+                                                <option value="Approved">Approved</option>
+                                                <option value="Denied">Denied</option>
+                                            </select>
+                                            <input type="button" class="btn btn-secondary" value="Update Status" id="actionbutton" />
+                                            <div id="modalstatus" class="text-left mt-3 mb-2"></div>
+
+                                        </div>`)
+            //buttonDiv = $(`<button id="UpdateAccount" data-toggle="updateModal" data-target="updateModal">Recover Account</button>`)
+            updateStatusDiv.appendTo("#updateStatusDiv")
+
+
+
+
             buttonDiv = $(`<button id="AddUser" data-toggle="addModal" data-target="addModal">Add Account</button>
                             <button id="UpdateAccount" data-toggle="myUpdateModal" data-target="myUpdateModal">Recover Account</button>`)
             //buttonDiv = $(`<button id="UpdateAccount" data-toggle="updateModal" data-target="updateModal">Recover Account</button>`)
@@ -306,19 +410,19 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 <div   class="list-group-item text-white bg-secondary row d-flex" id="status">Purchases</div>
               
 <div class= "list-group-item row d-flex text-center" id="heading">
-                <div class="col-3 h6">Supplier</div>
-                <div class="col-3 h6">Buyer</div>
-                <div class="col-3 h6">Net</div>
-                <div class="col-3 h6">Date</div>
+                <div class="col-2 h6">Supplier</div>
+                <div class="col-2 h6">Buyer</div>
+                <div class="col-2 h6">Net</div>
+                <div class="col-2 h6">Date</div>
+                <div class="col-2 h6">Status</div>
+
 `);
         div.appendTo($("#logsList"));
 
-        console.log(usealldata)
         usealldata ? sessionStorage.setItem("allLogs", JSON.stringify(data)) : console.log("null??");
 
         //sessionStorage.setItem("allLogs", JSON.stringify(data));
         data.forEach(async form => {
-
             let username
             let response = await fetch(`api/login/getUserByID/${form.accountID}`)
             if (response.ok) {
@@ -336,11 +440,12 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
             formatDate = mm + '/' + dd + '/' + yyyy;
            
 
-            btn = $(`<button class="list-group-item row d-flex" id="${form.purchase_ID}">`);
-            btn.html(`<div class="col-3" id="logCompany${form.supplier}">${form.supplier}</div>
-                        <div class="col-3" id="logDate${username}">${username}</div>
-                        <div class="col-3" id="logLength${form.net}">$${form.net}</div>
-                        <div class="col-3" id="logLength${formatDate}">${formatDate}</div>
+            btn = $(`<button class="list-group-item row d-flex"  id="${form.purchase_ID}">`);
+            btn.html(`<div class="col-2" id="logCompany${form.supplier}">${form.supplier}</div>
+                        <div class="col-2" id="logDate${username}">${username}</div>
+                        <div class="col-2" id="logLength${form.net}">$${form.net}</div>
+                        <div class="col-2" id="logLength${formatDate}">${formatDate}</div>
+                        <div class="col-2" id="logLength${form.status}">${form.status}</div>
                 `
             );
             btn.appendTo($("#logsList"));
@@ -388,31 +493,39 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
 
     $("#userList").click(async (e) => {
        // clearModalFields();
-        
+        console.log("x")
         if (!e) e = window.event;
         let formID = e.target.parentNode.id;
-
-        if (formID !== "status") {
-            //formID = e.target.id;
-        } // clicked on row somewhere else
-
-        //$("#logModal").modal("toggle");
 
         let data = JSON.parse(sessionStorage.getItem("allLogs"))
         data.forEach(async (log) => {
             //console.log("comparing " + log.formID +" and "+formID)
             let username;
+            let buyer
             if (log.purchase_ID === parseInt(formID)) {
-                console.log("SAME")
+               sessionStorage.setItem("formID", formID)
                 $("#logModal").modal("toggle");
                 //let response = await fetch(`api/form/${accountID}`);
                 let response = await fetch(`api/login/getUserByID/${log.accountID}`)
                 if (response.ok) {
                     let payload = await response.json(); // th
-                    console.log("response is " + payload.username)
-                    username = payload.username
+                    username = payload.accountName
                 }
 
+                let response_purchase = await fetch(`api/Purchase/getByID/${log.purchase_ID}`)
+                if (response_purchase.ok) {
+                    let payload_purchase = await response_purchase.json(); // th
+                    buyerID = payload_purchase.accountID_approver
+                }
+
+                let response_buyer = await fetch(`api/login/getUserByID/${buyerID}`)
+                if (response_buyer.ok) {
+                    let payload = await response_buyer.json(); // th
+                    buyer = payload.accountName
+                }
+
+
+                
                 let date = log.purchaseDate
                 date = date.substr(0,10)
 
@@ -424,6 +537,8 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 $("#view_tax").val(log.tax);
                 $("#view_net").val("$" +log.net);
                 $("#view_total").val("$" +log.totalAfterTax);
+                $("#view_status").val(log.status);
+                $("#view_approvedBy").val(buyer);
 
                 $("#view_supplier").attr('readonly', true);
                 $("#view_buyer").attr('readonly', true);
@@ -433,13 +548,14 @@ $(() => { // main jQuery routine - executes every on page load, $ is short for j
                 $("#view_tax").attr('readonly', true);
                 $("#view_net").attr('readonly', true);
                 $("#view_total").attr('readonly', true);
-
+                $("#view_status").attr('readonly', true);
+                $("#view_approvedBy").attr('readonly', true);
 
             } else {
                 //console.log(".")
             }
 
-            //console.log(log)
+            //console.log(log)fact
         })
 
 

@@ -1,4 +1,5 @@
 ﻿
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Reflection;
@@ -44,6 +45,69 @@ namespace TheFactory_PhoneForm.Controllers
                 PurchaseViewModel viewmodel = new();
                 List<PurchaseViewModel> allForms = await viewmodel.GetAll(accountID);
                 Debug.WriteLine("\n\n\n Count is " + allForms.Count);
+                return Ok(allForms);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Problem in " + GetType().Name + " " +
+                MethodBase.GetCurrentMethod()!.Name + " " + ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError); // something went wrong
+            }
+        }
+
+        //update password
+        [HttpPut("{status},{id},{accountID}")]
+        public async Task<ActionResult> updateStatus(string status,int id,int accountID)
+        {
+            try
+            {
+                PurchaseViewModel viewmodel = new() { Purchase_ID = id };
+                Purchase acc = await viewmodel.getPurchaseByID(id);
+
+                if (acc != null)
+                {
+
+                    viewmodel.Purchase_ID = acc.Purchase_ID;
+                    viewmodel.accountID = acc.accountID;
+                    viewmodel.purchaseDate = acc.purchaseDate;
+                    viewmodel.supplier = acc.supplier;
+                    viewmodel.quantity = acc.quantity;
+                    viewmodel.productPrice = acc.productPrice;
+                    viewmodel.tax = acc.tax;
+                    viewmodel.net = acc.net;
+                    viewmodel.totalAfterTax = acc.totalAfterTax;
+                    viewmodel.reference = acc.reference;
+                    viewmodel.status = status;
+                    viewmodel.accountID_approver = accountID;
+                    
+
+
+                    int result = await viewmodel.UpdateStatus();
+
+                    return Ok(result);
+                    //return Ok(-1);
+
+                }
+
+
+
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+
+            return Ok(-1);
+        }
+
+
+        [HttpGet("[action]/{purchaseID}")]
+        public async Task<IActionResult> getByID(int purchaseID)
+        {
+            try
+            {
+                PurchaseViewModel viewmodel = new();
+                Purchase allForms = await viewmodel.getPurchaseByID(purchaseID);
                 return Ok(allForms);
             }
             catch (Exception ex)

@@ -79,7 +79,7 @@ namespace ViewModels
             try
             {
                 List<Form> allForms = await daoForm.GetAll();
-             
+
                 foreach (Form f in allForms)
                 {
                     //var parsedDate = DateTime.Parse(callDate);
@@ -91,16 +91,16 @@ namespace ViewModels
                         companyName = f.companyName,
                         repName = f.repName,
                         callDate = f.callDate,
-                        
+
                         callLength = f.timeLength,
-                    callDesc = f.callDesc,
-                    issueSolved = f.issueSolved,
-                    followUp = f.followUp
-                     };
+                        callDesc = f.callDesc,
+                        issueSolved = f.issueSolved,
+                        followUp = f.followUp
+                    };
 
 
 
-                    if (f.accountID == accountID || accountID ==1)
+                    if (f.accountID == accountID || (accountID == 1))
                     {
                         allVms.Add(newView);
                     }

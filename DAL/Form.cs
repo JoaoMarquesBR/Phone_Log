@@ -1,5 +1,4 @@
 ﻿using DatabaseDAL;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +6,7 @@ namespace DAL;
 
 public partial class Form : TheFactory_Entity
 {
-    public short formID { get; set; }
+    public int formID { get; set; }
 
     public int? accountID { get; set; }
 
